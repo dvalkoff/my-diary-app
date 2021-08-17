@@ -1,11 +1,13 @@
 package ru.valkov.spring.mydiaryapp.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class SignController {
     private final SignService signService;
 
@@ -15,9 +17,38 @@ public class SignController {
     }
 
 
-    @PostMapping("/sign-up")
-    public String registerUser(@RequestBody AppUserDetailsRequest appUserDetailsRequest) {
-        signService.registerUser(appUserDetailsRequest);
-        return "";
+    @GetMapping("/login")
+    public String getLoginView() {
+        return "/registration/login";
     }
+
+    @GetMapping("/sign-up")
+    public String getRegisterView() {
+        return "/registration/sign-up";
+    }
+
+    @GetMapping("/sign-up/confirm")
+    public String confirmAnAccount(@RequestParam("token") String token, Model model) {
+        try {
+            signService.confirmAnAccount(token);
+            return "/registration/account-activated";
+        } catch (IllegalStateException e) {
+            model.addAttribute("message", e.getMessage());
+            return "error-page";
+        }
+    }
+
+    @PostMapping("/sign-up")
+    public String registerUser(Model model, AppUserDetailsRequest appUserDetailsRequest) {
+        try {
+            signService.registerUser(appUserDetailsRequest);
+            model.addAttribute("name", appUserDetailsRequest.getFirstName());
+            return "/registration/confirm-email";
+        } catch (IllegalStateException e) {
+            model.addAttribute("message", e.getMessage());
+            return "error-page";
+        }
+
+    }
+
 }
