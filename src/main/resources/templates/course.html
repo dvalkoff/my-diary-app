@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>All courses</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+
+<body>
+
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="../">My Diary</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+    <div class="navbar-nav mr-auto">
+      <a class="nav-item nav-link" href="../">Timetable <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="/subscriptions">Subscriptions</a>
+      <a class="nav-item nav-link active" href="/courses">Find a course</a>
+    </div>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="#">My account</a>
+      <a class="nav-item nav-link" href="/logout">Logout</a>
+    </div>
+  </div>
+</header>
+
+
+<div class="container">
+  <p class="display-4" th:text="${course.getTitle()}"></p>
+  <p>
+    Creator: <a href="#" th:text="${course.getOwner().getFirstName()} + ' '+  ${course.getOwner().getLastName()}"></a>
+  </p>
+  <p th:text="'Subscribers: '+ ${course.getCountSubscribers()}"></p>
+</div>
+
+<hr>
+
+<div class="container">
+  <p>Course lessons:</p>
+
+  <tr th:each="lesson: ${lessons}">
+    <div class="rounded bg-primary m-2 p-2" >
+      <p>
+      <td
+              th:text="${lesson.getStartAt().getHour()} + ':' + ${lesson.getStartAt().getMinute()} +
+                        '-' + ${lesson.getEndsAt().getHour()} + ':' + ${lesson.getEndsAt().getMinute()}">
+
+      </td>
+      </p>
+      <p>
+      <td th:text="'Theme: ' + ${lesson.getTheme()}"></td>
+      </p>
+      <p>
+      <td th:text="'Description: ' + ${lesson.getDescription()}"></td>
+      </p>
+
+      <p>
+      <td th:text="'Homework: ' + ${lesson.getHomework()}"></td>
+      </p>
+    </div>
+  </tr>
+</div>
+
+</body>
+</html>

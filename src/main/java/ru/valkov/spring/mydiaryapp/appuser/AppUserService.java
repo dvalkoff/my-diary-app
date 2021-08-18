@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.valkov.spring.mydiaryapp.email.EmailSender;
 import ru.valkov.spring.mydiaryapp.email.EmailUtils;
+import ru.valkov.spring.mydiaryapp.main.entities.Course;
 import ru.valkov.spring.mydiaryapp.registration.token.ConfirmationToken;
 import ru.valkov.spring.mydiaryapp.registration.token.ConfirmationTokenService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -101,4 +103,9 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalStateException(String.format("User with username %s not found", username)));
     }
+
+    public AppUser saveUser(AppUser appUser) {
+        return appUserRepository.save(appUser);
+    }
+
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>All courses</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+</head>
+
+<body>
+
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="../">My Diary</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="../">Timetable <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/subscriptions">Subscriptions</a>
+            <a class="nav-item nav-link active" href="#">Find a course</a>
+        </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="#">My account</a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <p>All courses:</p>
+    <div class="row align-items-center rounded bg-primary m-2 p-2" th:each="course: ${courses.getContent()}">
+            <div class="col">
+                <a class="h5 text-light" th:href="'/courses/' + ${course.getTitle()}" th:text="${course.getTitle()}"></a>
+                <p class="text-light" th:text="'Creator: ' + ${course.getOwner().getFirstName()} + ' ' + ${course.getOwner().getLastName()}"></p>
+                <p class="text-light" th:text="'Subscribers: ' + ${course.getCountSubscribers()}"></p>
+            </div>
+            <div class="col-md-auto">
+                <a th:href="'/courses/' + ${course.getTitle()} + '/subscribe'" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Subscribe</a>
+            </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center bg-light">
+    <tr th:if="${courses.getTotalPages() > 1}" class="pagination"
+        th:each="pageNumber : ${pages}">
+        <a th:href="@{/courses( page=${pageNumber})}"
+           th:text="${pageNumber}"
+           th:class="${pageNumber==courses.number + 1} ? 'btn disabled'"
+           th:classappend="p-3"
+           role="button"></a>
+    </tr>
+    <tr th:if="${courses.getTotalPages() > 1 && courses.getTotalPages() > courses.number + 1}" class="pagination">
+        <a th:href="@{/courses( page=${courses.number + 2})}"
+           th:text="'next'"
+           class="p-3"
+           role="button"></a>
+    </tr>
+</div>
+
+</body>
+</html>

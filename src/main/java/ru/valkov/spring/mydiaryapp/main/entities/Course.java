@@ -1,10 +1,10 @@
-package ru.valkov.spring.mydiaryapp.db.entities;
+package ru.valkov.spring.mydiaryapp.main.entities;
 
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Course {
@@ -21,7 +21,10 @@ public class Course {
     private Long id;
 
 
-    @Column(nullable = false)
+    @Column(
+            unique = true,
+            nullable = false
+    )
     private String title;
 
     @ManyToOne
@@ -32,12 +35,17 @@ public class Course {
     private AppUser owner;
 
     @ManyToMany
-    private List<AppUser> subscribers;
+    @JoinTable(
+            name = "user_course",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<AppUser> subscribers;
 
     public Course(String title, AppUser owner) {
         this.owner = owner;
         this.title = title;
-        this.subscribers = Collections.emptyList();
+        this.subscribers = Set.of();
     }
 
     public Course() {
@@ -67,11 +75,11 @@ public class Course {
         this.title = title;
     }
 
-    public List<AppUser> getSubscribers() {
+    public Set<AppUser> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<AppUser> subscribers) {
+    public void setSubscribers(Set<AppUser> subscribers) {
         this.subscribers = subscribers;
     }
 
@@ -83,6 +91,7 @@ public class Course {
         subscribers.remove(appUser);
     }
 
+    @Transient
     public Integer getCountSubscribers() {
         return subscribers.size();
     }

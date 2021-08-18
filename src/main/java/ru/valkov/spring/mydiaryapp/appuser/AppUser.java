@@ -3,11 +3,13 @@ package ru.valkov.spring.mydiaryapp.appuser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.valkov.spring.mydiaryapp.main.entities.Course;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -55,6 +57,9 @@ public class AppUser implements UserDetails {
     @Column(nullable = false)
     private boolean isEnabled;
 
+    @ManyToMany(mappedBy = "subscribers")
+    private Set<Course> subscriptions;
+
     public AppUser(String firstName,
                    String lastName,
                    String username,
@@ -73,6 +78,7 @@ public class AppUser implements UserDetails {
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
+        this.subscriptions = Set.of();
     }
 
     public AppUser() {
@@ -167,5 +173,21 @@ public class AppUser implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public Set<Course> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<Course> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public void addSubscription(Course course) {
+        subscriptions.add(course);
+    }
+
+    public void removeSubscription(Course course) {
+        subscriptions.remove(course);
     }
 }
