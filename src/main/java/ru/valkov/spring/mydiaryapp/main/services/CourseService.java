@@ -8,6 +8,7 @@ import ru.valkov.spring.mydiaryapp.main.entities.Course;
 import ru.valkov.spring.mydiaryapp.main.repositories.CourseRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -33,5 +34,9 @@ public class CourseService {
 
     public Course saveCourse(Course course) {
         return courseRepository.save(course);
+    }
+
+    public Optional<Course> findCourseByTitle(String courseTitle) {
+        return courseRepository.findByTitle(courseTitle);
     }
 }

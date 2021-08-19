@@ -57,7 +57,11 @@ public class AppUser implements UserDetails {
     @Column(nullable = false)
     private boolean isEnabled;
 
-    @ManyToMany(mappedBy = "subscribers")
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "subscribers"
+    )
     private Set<Course> subscriptions;
 
     public AppUser(String firstName,
@@ -189,5 +193,11 @@ public class AppUser implements UserDetails {
 
     public void removeSubscription(Course course) {
         subscriptions.remove(course);
+    }
+
+    public boolean userHasCourse(Course course) {
+        return subscriptions.stream().anyMatch(
+                c -> c.getId().equals(course.getId())
+        );
     }
 }

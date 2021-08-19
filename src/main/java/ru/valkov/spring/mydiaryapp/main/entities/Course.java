@@ -27,6 +27,11 @@ public class Course {
     )
     private String title;
 
+    @Column(
+            columnDefinition = "TEXT"
+    )
+    private String description;
+
     @ManyToOne
     @JoinColumn(
             name = "owner_id",
@@ -45,6 +50,13 @@ public class Course {
     public Course(String title, AppUser owner) {
         this.owner = owner;
         this.title = title;
+        this.subscribers = Set.of();
+    }
+
+    public Course(String title, String description, AppUser owner) {
+        this.title = title;
+        this.description = description;
+        this.owner = owner;
         this.subscribers = Set.of();
     }
 
@@ -94,5 +106,13 @@ public class Course {
     @Transient
     public Integer getCountSubscribers() {
         return subscribers.size();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

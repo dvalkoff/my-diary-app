@@ -13,6 +13,7 @@ import ru.valkov.spring.mydiaryapp.main.services.CourseService;
 import ru.valkov.spring.mydiaryapp.main.services.LessonService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IndexService {
@@ -79,5 +80,40 @@ public class IndexService {
         Course updatedCourse = courseService.saveCourse(course);
 
         return;
+    }
+
+    @Transactional
+    public void unsubscribeUserFromCourse(String courseTitle) {
+        Course course = getCourseByTitle(courseTitle);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((AppUser)principal).getUsername();
+        AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
+
+        course.removeSubscriber(appUser);
+        appUser.removeSubscription(course);
+
+        appUserService.saveUser(appUser);
+        courseService.saveCourse(course);
+
+    }
+
+    public void createNewCourse(CourseDetailsRequest courseDetailsRequest) {
+        Optional<Course> unexpectedCourse = courseService.findCourseByTitle(courseDetailsRequest.getTitle());
+        if (unexpectedCourse.isPresent()) {
+            throw new IllegalStateException(String.format("Course with title %s already exists", courseDetailsRequest.getTitle()));
+        }
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((AppUser)principal).getUsername();
+        AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
+
+        Course course = new Course(
+                courseDetailsRequest.getTitle(),
+                courseDetailsRequest.getDescription(),
+                appUser
+        );
+
+        courseService.saveCourse(course);
     }
 }
