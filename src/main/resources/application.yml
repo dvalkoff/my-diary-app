@@ -5,12 +5,11 @@ server:
 
 spring:
   datasource:
-    password: password
-    url: jdbc:postgresql://localhost:5432/registration
-    username: admin
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
   jpa:
     hibernate:
-      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
