@@ -23,27 +23,33 @@
             <a class="nav-item nav-link" href="/courses">Find a course</a>
         </div>
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="#">My account</a>
+            <a class="nav-item nav-link" href="/me">My account</a>
             <a class="nav-item nav-link" href="/logout">Logout</a>
         </div>
     </div>
 </header>
 
 
-<div class="container">
+<div class="container text-light p-3">
     <p>Your lessons:</p>
 
     <tr th:each="lesson: ${lessons}">
         <div class="rounded bg-primary m-2" >
             <p>
                 <td
-                th:text="${lesson.getStartAt().getHour()} + ':' + ${lesson.getStartAt().getMinute()} +
-                        '-' + ${lesson.getEndsAt().getHour()} + ':' + ${lesson.getEndsAt().getMinute()}">
-
+                th:text="${lesson.getStartsAt().getDayOfWeek().toString()} +
+                ' ' + ${T(java.lang.String).format(formatter, lesson.getStartsAt().getHour())}
+                + ':' + ${T(java.lang.String).format(formatter, lesson.getStartsAt().getMinute())}
+                + '-' + ${T(java.lang.String).format(formatter, lesson.getEndsAt().getHour())}
+                + ':'+ ${T(java.lang.String).format(formatter, lesson.getEndsAt().getMinute())}">
                 </td>
             </p>
             <p>
-                <td th:text="'Theme: ' + ${lesson.getTheme()}"></td>
+                <td class="h5" th:text="'Theme: ' + ${lesson.getTheme()}"></td>
+            </p>
+
+            <p>
+                <td th:text="'Course: ' + ${lesson.getCourse().getTitle()}"></td>
             </p>
             <p>
                 <td th:text="'Description: ' + ${lesson.getDescription()}"></td>
@@ -53,7 +59,6 @@
                 <td th:text="'Homework: ' + ${lesson.getHomework()}"></td>
             </p>
         </div>
-
     </tr>
 </div>
 </body>

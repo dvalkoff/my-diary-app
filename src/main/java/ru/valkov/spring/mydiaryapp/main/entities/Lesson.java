@@ -38,15 +38,24 @@ public class Lesson {
     private String homework;
 
     @Column(nullable = false)
-    private LocalDateTime startAt;
+    private LocalDateTime startsAt;
 
     @Column(nullable = false)
     private LocalDateTime endsAt;
 
-    public Lesson(Course course, String theme, LocalDateTime startAt, LocalDateTime endsAt) {
+    public Lesson(Course course, String theme, LocalDateTime startsAt, LocalDateTime endsAt) {
         this.course = course;
         this.theme = theme;
-        this.startAt = startAt;
+        this.startsAt = startsAt;
+        this.endsAt = endsAt;
+    }
+
+    public Lesson(Course course, String theme, String description, String homework, LocalDateTime startsAt, LocalDateTime endsAt) {
+        this.course = course;
+        this.theme = theme;
+        this.description = description;
+        this.homework = homework;
+        this.startsAt = startsAt;
         this.endsAt = endsAt;
     }
 
@@ -93,12 +102,12 @@ public class Lesson {
         this.homework = homework;
     }
 
-    public LocalDateTime getStartAt() {
-        return startAt;
+    public LocalDateTime getStartsAt() {
+        return startsAt;
     }
 
-    public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
+    public void setStartsAt(LocalDateTime startAt) {
+        this.startsAt = startAt;
     }
 
     public LocalDateTime getEndsAt() {

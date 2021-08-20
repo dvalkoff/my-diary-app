@@ -1,6 +1,5 @@
 package ru.valkov.spring.mydiaryapp.main.repositories;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
@@ -11,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    List<Lesson> findAllByCourse_SubscribersOrderByStartAt(AppUser appUser);
+    List<Lesson> findAllByCourse_SubscribersOrderByStartsAt(AppUser appUser);
     List<Lesson> findAllByCourse(Course course);
 }

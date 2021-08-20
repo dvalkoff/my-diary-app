@@ -1,16 +1,16 @@
-package ru.valkov.spring.mydiaryapp.main;
+package ru.valkov.spring.mydiaryapp.main.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
 import ru.valkov.spring.mydiaryapp.appuser.AppUserService;
+import ru.valkov.spring.mydiaryapp.main.requests.CourseDetailsRequest;
 import ru.valkov.spring.mydiaryapp.main.entities.Course;
 import ru.valkov.spring.mydiaryapp.main.entities.Lesson;
-import ru.valkov.spring.mydiaryapp.main.services.CourseService;
-import ru.valkov.spring.mydiaryapp.main.services.LessonService;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +52,18 @@ public class IndexService {
         return courses;
     }
 
+    public Page<Course> getUserSubscriptionsPageable(Pageable pageable) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String username = ((AppUser)principal).getUsername();
+
+        AppUser appUser = (AppUser) appUserService.loadUserByUsername(username);
+
+        Page<Course> courses = courseService.getAllUsersCoursesPageable(appUser, pageable);
+
+        return courses;
+    }
+
     public Page<Course> getCoursesPageable(PageRequest pageable) {
          return courseService.getCoursesPageable(pageable);
     }
@@ -78,8 +90,6 @@ public class IndexService {
 
         AppUser updatedUser = appUserService.saveUser(appUser);
         Course updatedCourse = courseService.saveCourse(course);
-
-        return;
     }
 
     @Transactional
@@ -115,5 +125,9 @@ public class IndexService {
         );
 
         courseService.saveCourse(course);
+    }
+
+    public List<Course> getUserOwnCourses(AppUser appUser) {
+        return courseService.findCoursesByOwner(appUser);
     }
 }

@@ -2,6 +2,7 @@ package ru.valkov.spring.mydiaryapp.main.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
 import ru.valkov.spring.mydiaryapp.main.entities.Course;
@@ -23,6 +24,10 @@ public class CourseService {
         return courseRepository.findAllBySubscribers(appUser);
     }
 
+    public Page<Course> getAllUsersCoursesPageable(AppUser appUser, Pageable pageable) {
+        return courseRepository.findAllBySubscribers(appUser, pageable);
+    }
+
     public Page<Course> getCoursesPageable(PageRequest pageable) {
         return courseRepository.findAll(pageable);
     }
@@ -38,5 +43,9 @@ public class CourseService {
 
     public Optional<Course> findCourseByTitle(String courseTitle) {
         return courseRepository.findByTitle(courseTitle);
+    }
+
+    public List<Course> findCoursesByOwner(AppUser appUser) {
+        return courseRepository.findAllByOwner(appUser);
     }
 }

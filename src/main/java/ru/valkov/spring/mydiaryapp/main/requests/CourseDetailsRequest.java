@@ -1,4 +1,4 @@
-package ru.valkov.spring.mydiaryapp.main;
+package ru.valkov.spring.mydiaryapp.main.requests;
 
 public class CourseDetailsRequest {
     private String title;

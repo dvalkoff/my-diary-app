@@ -37,15 +37,10 @@
   </p>
   <p th:text="'Description: '+ ${course.getDescription()}"></p>
   <p th:text="'Subscribers: '+ ${course.getCountSubscribers()}"></p>
+  <a class="nav-item nav-link" role="button" th:href="'/courses/' + ${course.getTitle()} + '/create-lesson'">Logout</a>
 </div>
 
 <hr>
-
-<div th:switch="${course.getOwner().getUsername().equals(user.getUsername())}">
-  <div class="d-flex justify-content-center" th:case="true">
-    <a class="btn btn-success btn-lg text-light justify-content-center" th:href="'/courses/' + ${course.getTitle()} + '/create-lesson'" role="button">Add a lesson</a>
-  </div>
-<div/>
 
 <div class="container">
   <p>Course lessons:</p>
@@ -54,7 +49,7 @@
     <div class="rounded bg-primary m-2 p-2" >
       <p>
       <td
-              th:text="${lesson.getStartsAt().getHour()} + ':' + ${lesson.getStartsAt().getMinute()} +
+              th:text="${lesson.getStartAt().getHour()} + ':' + ${lesson.getStartAt().getMinute()} +
                         '-' + ${lesson.getEndsAt().getHour()} + ':' + ${lesson.getEndsAt().getMinute()}">
 
       </td>

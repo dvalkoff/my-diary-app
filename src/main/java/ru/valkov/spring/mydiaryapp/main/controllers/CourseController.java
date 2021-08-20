@@ -1,4 +1,4 @@
-package ru.valkov.spring.mydiaryapp.main;
+package ru.valkov.spring.mydiaryapp.main.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
+import ru.valkov.spring.mydiaryapp.main.requests.CourseDetailsRequest;
+import ru.valkov.spring.mydiaryapp.main.services.IndexService;
 import ru.valkov.spring.mydiaryapp.main.entities.Course;
 import ru.valkov.spring.mydiaryapp.main.entities.Lesson;
 
@@ -47,7 +49,8 @@ public class CourseController {
             model.addAttribute("subscriptions", indexService.getUserSubscriptions());
 
             return "course/courses";
-        } catch (Exception e) {
+
+        } catch (ClassCastException e) {
             model.addAttribute("error", e.getMessage());
             return "error-page";
         }
@@ -58,8 +61,13 @@ public class CourseController {
     public String getCourse(@PathVariable("courseTitle") String courseTitle, Model model) {
         Course course = indexService.getCourseByTitle(courseTitle);
         model.addAttribute("course", course);
+
         List<Lesson> lessons = indexService.getLessonsByCourse(course);
         model.addAttribute("lessons", lessons);
+
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
+
         return "course/course";
     }
 
