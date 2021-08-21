@@ -4,6 +4,11 @@ server:
     include-binding-errors: always
 
 spring:
+  thymeleaf:
+    enabled: true
+    suffix: .html
+    prefix: classpath:/templates/
+
   datasource:
     password: ${SPRING_DATASOURCE_PASSWORD}
     url: ${SPRING_DATASOURCE_URL}
