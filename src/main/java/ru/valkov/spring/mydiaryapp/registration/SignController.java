@@ -17,31 +17,31 @@ public class SignController {
 
     @GetMapping("/login")
     public String getLoginView() {
-        return "registration :: login";
+        return "registration/login";
     }
 
     @GetMapping("/sign-up")
     public String getRegisterView() {
-        return "registration :: sign-up";
+        return "registration/sign-up";
     }
 
     @GetMapping("/sign-up/confirm")
     public String confirmAnAccount(@RequestParam("token") String token, Model model) {
         try {
             signService.confirmAnAccount(token);
-            return "registration :: account-activated";
+            return "registration/account-activated";
         } catch (IllegalStateException e) {
             model.addAttribute("message", e.getMessage());
             return "error-page";
         }
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("sign-up")
     public String registerUser(Model model, AppUserDetailsRequest appUserDetailsRequest) {
         try {
             signService.registerUser(appUserDetailsRequest);
             model.addAttribute("name", appUserDetailsRequest.getFirstName());
-            return "registration :: confirm-email";
+            return "registration/confirm-email";
         } catch (IllegalStateException e) {
             model.addAttribute("message", e.getMessage());
             return "error-page";
