@@ -41,7 +41,7 @@ public class AppUserService implements UserDetailsService {
         Optional<AppUser> unexpectedUser = appUserRepository.findByUsername(appUser.getUsername());
 
         String token = UUID.randomUUID().toString();
-        String linkToConfirmToken = "http://localhost:8080/sign-up/confirm?token=" + token;
+        String linkToConfirmToken = "https://my-diary-appl.herokuapp.com/sign-up/confirm?token=" + token;
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
