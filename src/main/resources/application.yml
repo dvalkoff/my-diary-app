@@ -14,19 +14,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: true
 
   mail:
-    host: localhost
-    port: 1025
-    username: admin
-    password: password
+    host: smtp.mail.ru
+    port: 465
+    username: ER_radd@mail.ru
+    password: ${EMAIL_PASSWORD}
 
     properties:
       mail:
+        transport:
+          protocol: smtp
         smtp:
-          ssl:
-            trust: "*"
           auth: true
           starttls:
             enable: true

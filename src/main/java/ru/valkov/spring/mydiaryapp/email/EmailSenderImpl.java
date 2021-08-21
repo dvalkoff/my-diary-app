@@ -27,7 +27,7 @@ public class EmailSenderImpl implements EmailSender {
             messageHelper.setText(email, true);
             messageHelper.setTo(to);
             messageHelper.setSubject("Activate your account");
-            messageHelper.setFrom("my-diary@gmail.com");
+            messageHelper.setFrom("ER_radd@mail.ru");
 
             mailSender.send(mimeMessage);
 
