@@ -16,11 +16,10 @@ spring:
         format_sql: true
 
   mail:
-    host: smtp.mail.ru
-    port: 465
     username: ER_radd@mail.ru
     password: ${EMAIL_PASSWORD}
-
+    host: smtp.mail.ru
+    port: 587
     properties:
       mail:
         transport:
