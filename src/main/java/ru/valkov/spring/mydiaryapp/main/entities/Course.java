@@ -3,6 +3,7 @@ package ru.valkov.spring.mydiaryapp.main.entities;
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -50,14 +51,14 @@ public class Course {
     public Course(String title, AppUser owner) {
         this.owner = owner;
         this.title = title;
-        this.subscribers = Set.of();
+        this.subscribers = Collections.EMPTY_SET;
     }
 
     public Course(String title, String description, AppUser owner) {
         this.title = title;
         this.description = description;
         this.owner = owner;
-        this.subscribers = Set.of();
+        this.subscribers = Collections.EMPTY_SET;
     }
 
     public Course() {

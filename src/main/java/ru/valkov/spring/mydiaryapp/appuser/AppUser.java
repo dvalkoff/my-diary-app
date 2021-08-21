@@ -7,9 +7,7 @@ import ru.valkov.spring.mydiaryapp.main.entities.Course;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -82,7 +80,7 @@ public class AppUser implements UserDetails {
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
-        this.subscriptions = Set.of();
+        this.subscriptions = Collections.EMPTY_SET;
     }
 
     public AppUser() {
@@ -90,7 +88,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(appUserRole.name()));
+        return Arrays.asList(new SimpleGrantedAuthority(appUserRole.name()));
     }
 
     @Override

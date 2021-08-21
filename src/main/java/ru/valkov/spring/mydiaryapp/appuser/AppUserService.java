@@ -51,7 +51,7 @@ public class AppUserService implements UserDetailsService {
 
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 
-        if (unexpectedUser.isEmpty()) {
+        if (!unexpectedUser.isPresent()) {
             AppUser savedUser = appUserRepository.save(appUser);
             confirmationToken.setAppUser(savedUser);
         } else {
