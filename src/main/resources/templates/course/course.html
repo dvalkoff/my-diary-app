@@ -54,14 +54,17 @@
     <div class="rounded bg-primary m-2 p-2" >
       <p>
       <td
-              th:text="${lesson.getStartsAt().getHour()} + ':' + ${lesson.getStartsAt().getMinute()} +
-                        '-' + ${lesson.getEndsAt().getHour()} + ':' + ${lesson.getEndsAt().getMinute()}">
-
+              th:text="${lesson.getStartsAt().getDayOfWeek().toString()} +
+                ' ' + ${T(java.lang.String).format(formatter, lesson.getStartsAt().getHour())}
+                + ':' + ${T(java.lang.String).format(formatter, lesson.getStartsAt().getMinute())}
+                + '-' + ${T(java.lang.String).format(formatter, lesson.getEndsAt().getHour())}
+                + ':'+ ${T(java.lang.String).format(formatter, lesson.getEndsAt().getMinute())}">
       </td>
       </p>
       <p>
-      <td th:text="'Theme: ' + ${lesson.getTheme()}"></td>
+      <td class="h5" th:text="'Theme: ' + ${lesson.getTheme()}"></td>
       </p>
+
       <p>
       <td th:text="'Description: ' + ${lesson.getDescription()}"></td>
       </p>

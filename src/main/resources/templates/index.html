@@ -34,7 +34,7 @@
     <p>Your lessons:</p>
 
     <tr th:each="lesson: ${lessons}">
-        <div class="rounded bg-primary m-2" >
+        <div class="rounded bg-primary m-2 p-2" >
             <p>
                 <td
                 th:text="${lesson.getStartsAt().getDayOfWeek().toString()} +

@@ -64,6 +64,7 @@ public class CourseController {
 
         List<Lesson> lessons = indexService.getLessonsByCourse(course);
         model.addAttribute("lessons", lessons);
+        model.addAttribute("formatter", "%02d");
 
         AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", user);
