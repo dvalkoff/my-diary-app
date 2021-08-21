@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import java.util.*;
 
 @Entity
+@Table
 public class AppUser implements UserDetails {
     @Id
     @SequenceGenerator(
