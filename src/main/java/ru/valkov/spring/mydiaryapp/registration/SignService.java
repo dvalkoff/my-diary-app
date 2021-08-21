@@ -1,8 +1,6 @@
 package ru.valkov.spring.mydiaryapp.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.valkov.spring.mydiaryapp.appuser.AppUser;
 import ru.valkov.spring.mydiaryapp.appuser.AppUserRole;
@@ -23,7 +21,7 @@ public class SignService {
                 request.getLastName(),
                 request.getEmail(),
                 request.getPassword(),
-                AppUserRole.STUDENT,
+                AppUserRole.USER_ROLE,
                 true,
                 true,
                 true,

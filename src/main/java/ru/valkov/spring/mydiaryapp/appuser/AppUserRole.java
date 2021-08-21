@@ -1,6 +1,6 @@
 package ru.valkov.spring.mydiaryapp.appuser;
 
 public enum AppUserRole {
-    STUDENT,
-    ADMIN
+    USER_ROLE,
+    ADMIN_ROLE
 }
