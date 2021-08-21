@@ -7,14 +7,8 @@ import java.time.LocalDateTime;
 @Table
 public class Lesson {
     @Id
-    @SequenceGenerator(
-            name = "lesson_sequence",
-            sequenceName = "lesson_sequence",
-            allocationSize = 1
-    )
     @GeneratedValue(
-            generator = "lesson_sequence",
-            strategy = GenerationType.SEQUENCE
+            strategy = GenerationType.IDENTITY
     )
     private Long id;
 
