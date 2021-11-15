@@ -40,7 +40,10 @@ public class CourseController {
             PageRequest pageable = PageRequest.of(page, 5);
 
             Page<Course> paging = indexService.getCoursesPageable(pageable);
-            List<Integer> pages = IntStream.rangeClosed(1, paging.getTotalPages()).boxed().collect(Collectors.toList());
+            List<Integer> pages = IntStream
+                    .rangeClosed(1, paging.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
             AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             model.addAttribute("user", user);
@@ -63,10 +66,10 @@ public class CourseController {
         model.addAttribute("course", course);
 
         List<Lesson> lessons = indexService.getLessonsByCourse(course);
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         model.addAttribute("lessons", lessons);
         model.addAttribute("formatter", "%02d");
-
-        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", user);
 
         return "course/course";
@@ -78,10 +81,7 @@ public class CourseController {
         try {
             indexService.subscribeUserToCourse(courseTitle);
             return "redirect:/courses";
-        } catch (IllegalStateException e) {
-            model.addAttribute("error", e.getMessage());
-            return "error-page";
-        } catch (UsernameNotFoundException e) {
+        } catch (IllegalStateException | UsernameNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "error-page";
         }
@@ -92,10 +92,7 @@ public class CourseController {
         try {
             indexService.unsubscribeUserFromCourse(courseTitle);
             return "redirect:/courses";
-        } catch (IllegalStateException e) {
-            model.addAttribute("error", e.getMessage());
-            return "error-page";
-        } catch (UsernameNotFoundException e) {
+        } catch (IllegalStateException | UsernameNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "error-page";
         }

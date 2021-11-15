@@ -9,7 +9,6 @@ import ru.valkov.spring.mydiaryapp.main.repositories.LessonRepository;
 import ru.valkov.spring.mydiaryapp.main.requests.LessonDetailsRequest;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service

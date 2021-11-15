@@ -46,7 +46,10 @@ public class IndexController {
             PageRequest pageable = PageRequest.of(page, 5);
 
             Page<Course> paging = indexService.getUserSubscriptionsPageable(pageable);
-            List<Integer> pages = IntStream.rangeClosed(1, paging.getTotalPages()).boxed().collect(Collectors.toList());
+            List<Integer> pages = IntStream
+                    .rangeClosed(1, paging.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
             AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             model.addAttribute("user", user);
