@@ -41,7 +41,7 @@ public class AppUserService implements UserDetailsService {
         Optional<AppUser> unexpectedUser = appUserRepository.findByUsername(appUser.getUsername());
 
         String token = UUID.randomUUID().toString();
-        String linkToConfirmToken = "http://51.250.1.20:3000/sign-up/confirm?token=" + token;
+        String linkToConfirmToken = "http://158.160.109.122:3000/sign-up/confirm?token=" + token;
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
